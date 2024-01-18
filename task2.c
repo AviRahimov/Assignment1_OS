@@ -14,14 +14,14 @@ int main(){
     scanf("%d", &num3);
 
     if((pow(num1, 2) + pow(num2, 2)) == (pow(num3, 2))){
-        double alpha = asin(num1/num3); 
-        double beta = asin(num2/num3);
-        double gama = asin(num3/num3);
+        double alpha = asin((double)num1/num3); 
+        double beta = asin((double)num2/num3);
+        double gama = asin((double)num3/num3);
         printf("The size of the angles in your triangle are:%f, %f, %f \n", 
         alpha, beta, gama);
     }
     else {
-        perror("Your triangle lengths not following pythagoras theorem\n");
+        printf("Error\n");
         exit(-1);
     }
     return 0;
