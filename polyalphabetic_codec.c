@@ -1,15 +1,4 @@
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <string.h>
-
-#define NUM_OF_CHARS 256
-
-// This struct represents a codec object.
-typedef struct {
-    char map[NUM_OF_CHARS];
-    char reverseMap[NUM_OF_CHARS];
-} MyCodec;
+#include "polyalphabetic_codec.h"
 
 // This function receives a char array with fixed size of 62 bytes, representing a map of the alphabet.
 // The function should return a pointer
@@ -67,9 +56,9 @@ void * createCodec(char key[62]) {
     return codec;
 }
 
-// This function receives ponters for: input char array, output char array, codec, and the size of the input array.
+// This function receives pointers for: input char array, output char array, codec, and the size of the input array.
 // The function should encode the input array and store the result in the output array.
-// The function retuerns the number of bytes written to the output array.
+// The function returns the number of bytes written to the output array.
 int encode (const char * in, char * out, void * codec, int size) {
     int encoded_bytes = 0;
 
@@ -86,7 +75,7 @@ int encode (const char * in, char * out, void * codec, int size) {
     return encoded_bytes;
 }
 
-// This function receives ponters for: input char array, output char array, codec, and the size of the input array.
+// This function receives pointers for: input char array, output char array, codec, and the size of the input array.
 // The function should decode the input array and store the result in the output array.
 // The function returns the number of bytes written to the output array.
 int decode (const char * in, char * out, void * codec, int size) {
@@ -110,55 +99,55 @@ void freecodec(void * codec) {
     free(codec);
 }
 
-int main(int argc, char *argv[]) {
-    char key[62] = {0};
-
-    if (argc != 2) {
-        printf("Usage: cipher <key>\n");
-        return 1;
-    }
-
-    // validate the key
-    for (int i = 0; i < 62; i++) {
-        if (argv[1][i] == '\0') {
-            break;
-        }
-        if (argv[1][i] < 48 || (argv[1][i] > 57 && argv[1][i] < 65) || (argv[1][i] > 90 && argv[1][i] < 97) || argv[1][i] > 122) {
-            printf("Invalid key\n");
-            return 1;
-        }
-        key[i] = argv[1][i];
-    }
-
-    // create the codec
-    void * codec = createCodec(key);
-    if (codec == NULL) {
-        printf("Error creating codec\n");
-        return 1;
-    }
-
-    // read from stdin and write to stdout
-    char buffer_in[1024] = {0};
-    char buffer_out[1024] = {0};
-    int read_bytes = 0;
-    int encoded_bytes = 0;
-    int decoded_bytes = 0;
-    while ((read_bytes = read(0, buffer_in, 1024)) > 0) {
-        encoded_bytes = encode(buffer_in, buffer_out, codec, read_bytes);
-        if (encoded_bytes == -1) {
-            printf("Error encoding\n");
-            return 1;
-        }
-        decoded_bytes = decode(buffer_out, buffer_in, codec, encoded_bytes);
-        if (decoded_bytes == -1) {
-            printf("Error decoding\n");
-            return 1;
-        }
-        write(1, buffer_out, decoded_bytes);
-    }
-
-    freecodec(codec);
-}
+//int main(int argc, char *argv[]) {
+//    char key[62] = {0};
+//
+//    if (argc != 2) {
+//        printf("Usage: cipher <key>\n");
+//        return 1;
+//    }
+//
+//    // validate the key
+//    for (int i = 0; i < 62; i++) {
+//        if (argv[1][i] == '\0') {
+//            break;
+//        }
+//        if (argv[1][i] < 48 || (argv[1][i] > 57 && argv[1][i] < 65) || (argv[1][i] > 90 && argv[1][i] < 97) || argv[1][i] > 122) {
+//            printf("Invalid key\n");
+//            return 1;
+//        }
+//        key[i] = argv[1][i];
+//    }
+//
+//    // create the codec
+//    void * codec = createCodec(key);
+//    if (codec == NULL) {
+//        printf("Error creating codec\n");
+//        return 1;
+//    }
+//
+//    // read from stdin and write to stdout
+//    char buffer_in[1024] = {0};
+//    char buffer_out[1024] = {0};
+//    int read_bytes = 0;
+//    int encoded_bytes = 0;
+//    int decoded_bytes = 0;
+//    while ((read_bytes = read(0, buffer_in, 1024)) > 0) {
+//        encoded_bytes = encode(buffer_in, buffer_out, codec, read_bytes);
+//        if (encoded_bytes == -1) {
+//            printf("Error encoding\n");
+//            return 1;
+//        }
+//        decoded_bytes = decode(buffer_out, buffer_in, codec, encoded_bytes);
+//        if (decoded_bytes == -1) {
+//            printf("Error decoding\n");
+//            return 1;
+//        }
+//        write(1, buffer_out, decoded_bytes);
+//    }
+//
+//    freecodec(codec);
+//}
 
     
     
