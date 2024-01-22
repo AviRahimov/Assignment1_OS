@@ -21,4 +21,14 @@ void myzip(const char *directory){
         perror("Error in tar");
         EXIT(EXIT_FAILURE);
     }
+
+    //fork for gzip 
+    if(!fork()){
+        close(pipefd[1]);
+        dup2(pipefd[0], STDIN_FILENO);
+        execlp("gzip","gzip",NULL);
+        perror("Error in gzip");
+        EXIT(EXIT_FAILURE);
+    }
+    
 }
