@@ -28,9 +28,9 @@ int main(int argc, char *argv[]) {
         dup2(pipe_tar_gzip[1], STDOUT_FILENO); // Redirect output to pipe
 
         char *tar_args[argc + 2];
-        tar_args[0] = "tar";
-        tar_args[1] = "-cf";
-        tar_args[2] = "-"; // Add "-" to write to stdout
+        tar_args[0] = (char *)"tar";
+        tar_args[1] = (char *)"-cf";
+        tar_args[2] = (char *)"-"; // Add "-" to write to stdout
         for (int i = 1; i < argc; i++) {
             tar_args[i + 2] = argv[i];
         }
