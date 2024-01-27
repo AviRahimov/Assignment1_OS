@@ -60,4 +60,5 @@ This task demonstrates file compression and encryption using Unix commands and p
     ![Pipes and Child Processes](https://github.com/AviRahimov/Assignment1_OS/assets/73108322/848c4cd7-65c7-4835-8a89-e57ddff4ce12)
   - Three child processes are used, one for each command (`tar`, `gzip`, `gpg`).
   - In each child process, the file descriptor for the read-end of the pipe is duplicated (`dup2`) to the standard input (stdin), and the standard output (stdout) to the write-end of the pipe.
-    ![File Descriptor Duplication](https://github.com/AviRahimov/Assignment1_OS/assets/73108322/dfe06752-afba-4fd5-b7c0-faa32119bccc)
+    ![image](https://github.com/AviRahimov/Assignment1_OS/assets/73108322/ef7e2bd1-af4f-4577-a436-71443d9d19cb)
+
