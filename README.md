@@ -1,4 +1,4 @@
-# Assignment 1: Operating System
+# Assignment 1: Operating Systems
 
 ## Task 1: [Task 1 Title]
 ### Overview
