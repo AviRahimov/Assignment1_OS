@@ -1,45 +1,62 @@
-#include "polyalphabetic_codec.h" // Assuming the codec functions are in this header file
+#include "polyalphabetic_codec.h"
+#include <fcntl.h>
+#include <sys/stat.h>
 
 int main(int argc, char *argv[]) {
-    char key[62] = {0};
-
-    if (argc != 2) {
-        printf("Usage: encode <key>\n");
+    if (argc != 3) {
+        printf("Usage: encode <src_file> <dst_file>\n");
         return 1;
     }
 
-    // validate the key
-    for (int i = 0; i < 62; i++) {
-        if (argv[1][i] == '\0') {
-            break;
-        }
-        if (argv[1][i] < 48 || (argv[1][i] > 57 && argv[1][i] < 65) || (argv[1][i] > 90 && argv[1][i] < 97) || argv[1][i] > 122) {
-            printf("Invalid key\n");
-            return 1;
-        }
-        key[i] = argv[1][i];
+    // Open the source file and read the string to be encoded
+    int src_fd = open(argv[1], O_RDONLY);
+    if (src_fd == -1) {
+        perror("Error opening source file");
+        return 1;
     }
 
+    struct stat st;
+    stat(argv[1], &st);
+    int size = st.st_size;
+
+    char *buffer_in = malloc(size);
+    if (read(src_fd, buffer_in, size) != size) {
+        printf("Error reading from source file\n");
+        return 1;
+    }
+    close(src_fd);
+
     // create the codec
-    void * codec = createCodec(key);
+    void * codec = createCodec();
     if (codec == NULL) {
         printf("Error creating codec\n");
         return 1;
     }
 
-    // read from stdin, encode, and write to stdout
-    char buffer_in[1024] = {0};
-    char buffer_out[1024] = {0};
-    int read_bytes = 0;
-    int encoded_bytes = 0;
-    while ((read_bytes = read(0, buffer_in, 1024)) > 0) {
-        encoded_bytes = encode(buffer_in, buffer_out, codec, read_bytes);
-        if (encoded_bytes == -1) {
-            printf("Error encoding\n");
-            return 1;
-        }
-        write(1, buffer_out, encoded_bytes);
+    // encode the string
+    char *buffer_out = malloc(size);
+    int encoded_bytes = encode(buffer_in, buffer_out, codec, size);
+    if (encoded_bytes == -1) {
+        printf("Error encoding\n");
+        return 1;
     }
 
+    // Open the destination file and write the encoded string
+    int dst_fd = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    if (dst_fd == -1) {
+        perror("Error opening destination file");
+        return 1;
+    }
+    if (write(dst_fd, buffer_out, encoded_bytes) != encoded_bytes) {
+        printf("Error writing encoded string to destination file\n");
+        return 1;
+    }
+    close(dst_fd);
+
     freecodec(codec);
+
+    free(buffer_in);
+    free(buffer_out);
+
+    return 0;
 }

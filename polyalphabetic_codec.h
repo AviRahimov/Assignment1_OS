@@ -15,7 +15,7 @@ typedef struct {
 } MyCodec;
 
 // Function prototypes
-void * createCodec(char key[62]);
+void * createCodec();
 int encode (const char * in, char * out, void * codec, int size);
 int decode (const char * in, char * out, void * codec, int size);
 void freecodec(void * codec);

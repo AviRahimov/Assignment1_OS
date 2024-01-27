@@ -19,11 +19,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc3a418e-e7cb-4ac0-b181-921081a2d773" name="Changes" comment="update task2 and write all the details in the docs file">
-      <change afterPath="$PROJECT_DIR$/decode_main.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/encode_main.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/polyalphabetic_codec.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task3.c" beforeDir="false" afterPath="$PROJECT_DIR$/polyalphabetic_codec.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decode_main.c" beforeDir="false" afterPath="$PROJECT_DIR$/decode_main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encode_main.c" beforeDir="false" afterPath="$PROJECT_DIR$/encode_main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/polyalphabetic_codec.c" beforeDir="false" afterPath="$PROJECT_DIR$/polyalphabetic_codec.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/polyalphabetic_codec.h" beforeDir="false" afterPath="$PROJECT_DIR$/polyalphabetic_codec.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,9 +64,9 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="task1.c" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Assignment1_OS" TARGET_NAME="task1.c" CONFIG_NAME="task1.c">
@@ -99,6 +98,7 @@
       <workItem from="1705499248688" duration="756000" />
       <workItem from="1705599563560" duration="1566000" />
       <workItem from="1705786460514" duration="4672000" />
+      <workItem from="1706375971449" duration="805000" />
     </task>
     <task id="LOCAL-00001" summary="create tasks">
       <option name="closed" value="true" />
