@@ -4,8 +4,17 @@ int inf_rec(int num){
     return inf_rec(num - 1);
 }
 
+void illegalAccess(){
+    int *ptr;
+    int value;
+
+    value = *ptr;
+    printf("value: %d", value);
+}
+
 
 int main(){
-    inf_rec(100);
+ //   inf_rec(100);
+    illegalAccess();
     return 0;
 }
