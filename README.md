@@ -42,8 +42,9 @@ If invalid, an "Error" message is displayed, and the program exits.
 
 ### Instructions
 1. Navigate to task2.c
-2. in terminal run: 'gcc -o task2 task2.c'
+2. in terminal run: 'make task2'
 3. run: './task2'
+4. follow the instructions
 
 
 ## Task 3: Writing a library
