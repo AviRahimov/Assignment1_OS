@@ -95,11 +95,11 @@ This task demonstrates file compression and encryption using Unix commands and p
 #### 4. Compress and Encrypt Files
 - Use the command `./myzip <directory>` to compress and encrypt the specified files.
 - The output file will be named `output`.
-  ![image](https://github.com/AviRahimov/Assignment1_OS/assets/73108322/2eb59ac5-93bf-4c9e-b968-7747ece5c452)
+![image](https://github.com/AviRahimov/Assignment1_OS/assets/73108322/2eb59ac5-93bf-4c9e-b968-7747ece5c452)
 
 #### 5. Decompress and Decrypt File
 - Run `./myunzip <compressed file>` to decompress and decrypt the file.
-  ![image](https://github.com/AviRahimov/Assignment1_OS/assets/73108322/73381b52-e4bb-4a60-9bc0-43a5f912a6e4)
+![image](https://github.com/AviRahimov/Assignment1_OS/assets/73108322/73381b52-e4bb-4a60-9bc0-43a5f912a6e4)
 
 ### Implementation Notes
 - **Pipes and Child Processes**:
