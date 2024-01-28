@@ -23,14 +23,15 @@ int main(int argc, char *argv[]) {
     }
 
     pid_t pid_tar = fork();
-    if (pid_tar == 0) { // Child process for tar
-        close(pipe_tar_gzip[0]); // Close unused read end
-        dup2(pipe_tar_gzip[1], STDOUT_FILENO); // Redirect output to pipe
+    // Child process for tarr
+    if (pid_tar == 0) {
+        close(pipe_tar_gzip[0]);
+        dup2(pipe_tar_gzip[1], STDOUT_FILENO); 
 
         char *tar_args[argc + 2];
         tar_args[0] = (char *)"tar";
         tar_args[1] = (char *)"-cf";
-        tar_args[2] = (char *)"-"; // Add "-" to write to stdout
+        tar_args[2] = (char *)"-";
         // for (int i = 1; i < argc; i++) {
         //     tar_args[i + 2] = argv[i];
         // }
@@ -44,10 +45,13 @@ int main(int argc, char *argv[]) {
     close(pipe_tar_gzip[1]); // Close write end in parent
 
     pid_t pid_gzip = fork();
-    if (pid_gzip == 0) { // Child process for gzip
+    // Child processs for gzip
+    if (pid_gzip == 0) { 
         close(pipe_gzip_gpg[0]); // Close unused read end
-        dup2(pipe_tar_gzip[0], STDIN_FILENO); // Redirect input from pipe_tar_gzip
-        dup2(pipe_gzip_gpg[1], STDOUT_FILENO); // Redirect output to pipe_gzip_gpg
+        // Redirect inputf from pipe_tar_gzip
+        dup2(pipe_tar_gzip[0], STDIN_FILENO); 
+        // Redirect output ti pipe_gzip_gpg
+        dup2(pipe_gzip_gpg[1], STDOUT_FILENO);
 
         execlp("gzip", "gzip", NULL);
         perror("gzip");
@@ -57,9 +61,10 @@ int main(int argc, char *argv[]) {
     close(pipe_gzip_gpg[1]); // Close write end in parent
 
     pid_t pid_gpg = fork();
-    if (pid_gpg == 0) { // Child process for gpg
-        dup2(pipe_gzip_gpg[0], STDIN_FILENO); // Redirect input from pipe_gzip_gpg
-        dup2(output_file, STDOUT_FILENO); // Redirect output to output_file
+    // Child process for gpg
+    if (pid_gpg == 0) { 
+        dup2(pipe_gzip_gpg[0], STDIN_FILENO);
+        dup2(output_file, STDOUT_FILENO); 
 
         execlp("gpg", "gpg", "--batch", "--passphrase-file", "./passphrase.txt", "--symmetric", NULL);
         perror("gpg");
@@ -67,7 +72,7 @@ int main(int argc, char *argv[]) {
     }
     close(pipe_gzip_gpg[0]); // Close read end in parent
 
-    // Wait for all child processes to finish
+    // wait for all child processess to finish
     waitpid(pid_tar, NULL, 0);
     waitpid(pid_gzip, NULL, 0);
     waitpid(pid_gpg, NULL, 0);
