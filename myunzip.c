@@ -20,7 +20,8 @@ int main(int argc, char const *argv[]) {
     }
 
     pid_t pid_gpg = fork();
-    if (pid_gpg == 0) { // Child process for gpg
+    // Child process for gpg
+    if (pid_gpg == 0) { 
         int gpg_fd = open(filename, O_RDONLY);
         if (gpg_fd == -1) {
             perror("Error opening gpg file");
@@ -61,9 +62,9 @@ int main(int argc, char const *argv[]) {
         perror("tar");
         exit(EXIT_FAILURE);
     }
-    close(pipe_gzip_tar[0]); // Close read end in parent
+    close(pipe_gzip_tar[0]); 
 
-    // Wait for all child processes to finish
+    // wait for all child processes to finish
     waitpid(pid_gpg, NULL, 0);
     waitpid(pid_gzip, NULL, 0);
     waitpid(pid_tar, NULL, 0);
