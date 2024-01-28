@@ -26,8 +26,7 @@ The bugs involve intentional program crashes to simulate real-world scenarios:
 1. Navigate to task1.c
 2.   Use the commands shown in [Download PDF Documentation](https://github.com/AviRahimov/Assignment1_OS/blob/main/Assignment1_OS.pdf), pages 1-7 is the solution for task 1.
 The commands for bug "C" are on pages 1-3, and those for bug "B" are on pages 4-7.
-
-
+3. You can run `make task1` or `make all` and then `./task1` to see the segmentation fault.
 ## Task 2: Working with a Math library
 ### Overview
 In this task, we were asked to write a code that the input is three side lengths of a triangle provided by the user.
@@ -42,7 +41,7 @@ An "Error" message is displayed if invalid, and the program exits.
 
 ### Instructions
 1. Navigate to task2.c
-2. in the terminal run: 'make task2' or 'make all'
+2. in the terminal run: `make task2` or `make all`
 3. run: './task2'
 4. follow the instructions
 
@@ -82,7 +81,7 @@ This task demonstrates file compression and encryption using Unix commands and p
 ### Instructions
 #### 1. Building the Program
 - Navigate to the project directory.
-- Execute `make all` or 'make task4' to build the program.
+- Execute `make all` or `make task4` to build the program.
 
 #### 2. Create a GPG Key
 - Run `gpg --gen-key` to generate a new GPG key.
