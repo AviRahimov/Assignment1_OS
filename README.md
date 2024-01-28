@@ -90,12 +90,13 @@ This task demonstrates file compression and encryption using Unix commands and p
 
 #### 3. Store the Passphrase
 - Enter the passphrase used for the GPG key into `passphrase.txt`.
-  ![Store the Passphrase](https://github.com/AviRahimov/Assignment1_OS/assets/73108322/0c7f7e68-5fe8-4edd-97a9-cd51372af07f)
+
+![Store the Passphrase](https://github.com/AviRahimov/Assignment1_OS/assets/73108322/0c7f7e68-5fe8-4edd-97a9-cd51372af07f)
 
 #### 4. Compress and Encrypt Files
 - Use the command `./myzip <directory>` to compress and encrypt the specified files.
-- The output file will be named `output`.
 ![image](https://github.com/AviRahimov/Assignment1_OS/assets/73108322/2eb59ac5-93bf-4c9e-b968-7747ece5c452)
+- The output file will be named `output`.
 
 #### 5. Decompress and Decrypt File
 - Run `./myunzip <compressed file>` to decompress and decrypt the file.
