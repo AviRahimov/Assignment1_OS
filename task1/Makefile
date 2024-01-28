@@ -1,14 +1,16 @@
 CC = gcc
 CFLAGS = -Wall -Wextra
-TARGETS = task1 uninit_val
+TARGETS = inf_rec uninit_val
 
 ifeq ($(DEBUG), 1)
   CFLAGS += -g3 -DDEBUG
 endif
 
-.PHONY: clean
+.PHONY: clean task1
 
-task1: task1.c
+task1: inf_rec uninit_val
+
+inf_rec: inf_rec.c
 	$(CC) $(CFLAGS)  -o $@ $^
 
 
