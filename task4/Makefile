@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra
 LIBS = -L. -l:encriptor.so
-TARGETS = myzip myunzip
+TARGETS = myzip myunzip output
 
 .PHONY: clean task4
 

@@ -67,8 +67,8 @@ This library provides a polyalphabetic encoder with the following functionalitie
 ### Instructions
 1. Build the project by executing the command:
    `make all` or `make task3`
-2. Export the library directory variable environment by the commands:
-   `LD_LIBRARY_PATH=.` and `export LD_LIBRARY_PATH`
+2. Export the library directory variable environment by the command:
+   `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.`
 3. For encoding, execute:
    `./encode_main src_file dst_file`
 4. For decoding, execute:
