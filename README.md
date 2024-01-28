@@ -66,8 +66,14 @@ This library provides a polyalphabetic encoder with the following functionalitie
     - Description: Frees the memory allocated for the codec. 
 
 ### Instructions
-
-
+1. Build the project by executing the command:
+   `make all` or `make task3`
+2. Export the library directory variable environment by the commands:
+   `LD_LIBRARY_PATH=.` and `export LD_LIBRARY_PATH`
+3. For encoding, execute:
+   `./encode_main src_file dst_file`
+4. For decoding, execute:
+   `./decode_main dst_file src_file`
 
 ## Task 4: File Collection, Compression, and Encryption
 ### Overview
@@ -75,8 +81,8 @@ This task demonstrates file compression and encryption using Unix commands and p
 
 ### Instructions
 #### 1. Building the Program
-- Navigate to the `Q4` directory.
-- Execute `make all` to build the program.
+- Navigate to the project directory.
+- Execute `make all` or 'make task4' to build the program.
 
 #### 2. Create a GPG Key
 - Run `gpg --gen-key` to generate a new GPG key.
