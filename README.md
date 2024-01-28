@@ -90,16 +90,17 @@ This task demonstrates file compression and encryption using Unix commands and p
 
 #### 3. Store the Passphrase
 - Enter the passphrase used for the GPG key into `passphrase.txt`.
-  ![Store the Passphrase](https://github.com/AviRahimov/Assignment1_OS/assets/73108322/0c7f7e68-5fe8-4edd-97a9-cd51372af07f)
+
+![Store the Passphrase](https://github.com/AviRahimov/Assignment1_OS/assets/73108322/0c7f7e68-5fe8-4edd-97a9-cd51372af07f)
 
 #### 4. Compress and Encrypt Files
-- Use the command `./myzip <file1> <file2>` to compress and encrypt the specified files.
+- Use the command `./myzip <directory/file>` to compress and encrypt the specified files.
+![image](https://github.com/AviRahimov/Assignment1_OS/assets/73108322/2eb59ac5-93bf-4c9e-b968-7747ece5c452)
 - The output file will be named `output`.
-  ![Compress and Encrypt Files](https://github.com/AviRahimov/Assignment1_OS/assets/73108322/db10c772-61d7-48db-9177-c5fccac32e65)
 
 #### 5. Decompress and Decrypt File
 - Run `./myunzip <compressed file>` to decompress and decrypt the file.
-  ![Decompress and Decrypt File](https://github.com/AviRahimov/Assignment1_OS/assets/73108322/7f3c64a8-20e3-44f9-b364-2f6435ccee7e)
+![image](https://github.com/AviRahimov/Assignment1_OS/assets/73108322/73381b52-e4bb-4a60-9bc0-43a5f912a6e4)
 
 ### Implementation Notes
 - **Pipes and Child Processes**:
