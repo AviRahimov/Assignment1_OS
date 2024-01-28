@@ -8,8 +8,8 @@
 #define BUFFER_SIZE 1024
 
 int main(int argc, char *argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "Usage: %s <file1> <file2> ... <fileN>\n", argv[0]);
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s <directory>\n", argv[0]);
         return -1;
     }
 
@@ -31,11 +31,12 @@ int main(int argc, char *argv[]) {
         tar_args[0] = (char *)"tar";
         tar_args[1] = (char *)"-cf";
         tar_args[2] = (char *)"-"; // Add "-" to write to stdout
-        for (int i = 1; i < argc; i++) {
-            tar_args[i + 2] = argv[i];
-        }
+        // for (int i = 1; i < argc; i++) {
+        //     tar_args[i + 2] = argv[i];
+        // }
+        tar_args[3] = argv[1];
         tar_args[argc + 2] = NULL;
-
+        
         execvp("tar", tar_args);
         perror("tar");
         exit(EXIT_FAILURE);
