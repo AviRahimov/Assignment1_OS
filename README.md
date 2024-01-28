@@ -1,5 +1,5 @@
 # Assignment 1: Operating Systems
-**By Avraham rahimov, Jonathan booritsky, and Avichay mazin.**
+**By Avraham Rahimov, Yonathan Boritsky, and Avichay Mazin.**
 
 ## Requirements
 * Linux machine (Ubuntu 22.04 LTS preferable)
