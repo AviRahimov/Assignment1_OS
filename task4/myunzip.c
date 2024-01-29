@@ -19,16 +19,18 @@ int main(int argc, char const *argv[]) {
         return -1;
     }
 
+    // create child process for gpg
     pid_t pid_gpg = fork();
-    // Child process for gpg
     if (pid_gpg == 0) { 
         int gpg_fd = open(filename, O_RDONLY);
         if (gpg_fd == -1) {
             perror("Error opening gpg file");
             exit(EXIT_FAILURE);
         }
-        dup2(gpg_fd, STDIN_FILENO); // Redirect input from file
-        dup2(pipe_gpg_gzip[1], STDOUT_FILENO); // Redirect output to pipe
+        // redirect input from file
+        dup2(gpg_fd, STDIN_FILENO);
+        // redirect output to pipe
+        dup2(pipe_gpg_gzip[1], STDOUT_FILENO); 
         close(pipe_gpg_gzip[0]);
         close(pipe_gpg_gzip[1]);
 
@@ -36,39 +38,66 @@ int main(int argc, char const *argv[]) {
         perror("gpg");
         exit(EXIT_FAILURE);
     }
-    close(pipe_gpg_gzip[1]); // Close write end in parent
-
+    // closing this pipe ends the gpg process from the parent because it is not used for dup2 in the parent anymore
+    close(pipe_gpg_gzip[1]);
+    
+    // create child process for gzip
     pid_t pid_gzip = fork();
-    if (pid_gzip == 0) { // Child process for gzip
-        dup2(pipe_gpg_gzip[0], STDIN_FILENO); // Redirect input from pipe_gpg_gzip
-        dup2(pipe_gzip_tar[1], STDOUT_FILENO); // Redirect output to pipe_gzip_tar
+    if (pid_gzip == 0) {
+        // redirect input from pipe_gpg_gzip inside child process
+        dup2(pipe_gpg_gzip[0], STDIN_FILENO);
+        // redirect output to pipe_gzip_tar inside child process
+        dup2(pipe_gzip_tar[1], STDOUT_FILENO);
         close(pipe_gpg_gzip[0]);
         close(pipe_gzip_tar[1]);
         close(pipe_gzip_tar[0]);
 
         execlp("gzip", "gzip", "-d", NULL);
-        perror("gzip");
+        perror("gzip failed");
         exit(EXIT_FAILURE);
     }
-    close(pipe_gpg_gzip[0]); // Close read end in parent
-    close(pipe_gzip_tar[1]); // Close write end in parent
+    // these are not needed in the parent process for the same reason as above
+    close(pipe_gpg_gzip[0]);
+    close(pipe_gzip_tar[1]);
 
+    // create child process for tar
     pid_t pid_tar = fork();
-    if (pid_tar == 0) { // Child process for tar
-        dup2(pipe_gzip_tar[0], STDIN_FILENO); // Redirect input from pipe_gzip_tar
+    if (pid_tar == 0) {
+        // redirect input from pipe_gzip_tar inside child process
+        dup2(pipe_gzip_tar[0], STDIN_FILENO);
+        // redirect output file to stdout inside child process
         close(pipe_gzip_tar[0]);
 
         execlp("tar", "tar", "-xv", NULL);
-        perror("tar");
+        perror("tar failed");
         exit(EXIT_FAILURE);
     }
+    // this is not needed in the parent process for the same reason as above
     close(pipe_gzip_tar[0]); 
 
     // wait for all child processes to finish
-    waitpid(pid_gpg, NULL, 0);
-    waitpid(pid_gzip, NULL, 0);
-    waitpid(pid_tar, NULL, 0);
-
-    printf("Decoding operation completed successfully.\n");
+    int status;
+    waitpid(pid_gpg, &status, 0);
+    if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
+            printf("Decryption successful.\n");
+    } 
+    else {
+            printf("Decryption failed.\n");
+    }
+    waitpid(pid_gzip, &status, 0);
+    if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
+        printf("Decompression successful.\n");
+    }
+    else {
+            printf("Decompression failed.\n");
+    }
+    waitpid(pid_tar, &status, 0);
+    if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
+            printf("Extraction successful.\n");
+    }
+    else {
+            printf("Extraction failed.\n");
+    }
+    printf("Dercyption, decompression and extraction finished\n");
     return 0;
 }

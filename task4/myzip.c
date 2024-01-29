@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
     }
 
     pid_t pid_tar = fork();
-    // Child process for tarr
+    // create child process for tar
     if (pid_tar == 0) {
         close(pipe_tar_gzip[0]);
         dup2(pipe_tar_gzip[1], STDOUT_FILENO); 
@@ -42,26 +42,27 @@ int main(int argc, char *argv[]) {
         perror("tar");
         exit(EXIT_FAILURE);
     }
-    close(pipe_tar_gzip[1]); // Close write end in parent
+    // close unused read end for the parent because it is not used for dup2 in the parent anymore
+    close(pipe_tar_gzip[1]);
 
     pid_t pid_gzip = fork();
-    // Child processs for gzip
+    // create child process for gzip
     if (pid_gzip == 0) { 
-        close(pipe_gzip_gpg[0]); // Close unused read end
-        // Redirect inputf from pipe_tar_gzip
+        close(pipe_gzip_gpg[0]);
+        // redirect input from pipe_tar_gzip
         dup2(pipe_tar_gzip[0], STDIN_FILENO); 
-        // Redirect output ti pipe_gzip_gpg
+        // redirect output to pipe_gzip_gpg
         dup2(pipe_gzip_gpg[1], STDOUT_FILENO);
 
         execlp("gzip", "gzip", NULL);
         perror("gzip");
         exit(EXIT_FAILURE);
     }
-    close(pipe_tar_gzip[0]); // Close read end in parent
-    close(pipe_gzip_gpg[1]); // Close write end in parent
+    close(pipe_tar_gzip[0]);
+    close(pipe_gzip_gpg[1]);
 
     pid_t pid_gpg = fork();
-    // Child process for gpg
+    // create child process for gpg
     if (pid_gpg == 0) { 
         dup2(pipe_gzip_gpg[0], STDIN_FILENO);
         dup2(output_file, STDOUT_FILENO); 
@@ -70,15 +71,35 @@ int main(int argc, char *argv[]) {
         perror("gpg");
         exit(EXIT_FAILURE);
     }
-    close(pipe_gzip_gpg[0]); // Close read end in parent
+    // close unused read end for the parent because it is not used for dup2 in the parent anymore
+    close(pipe_gzip_gpg[0]);
 
     // wait for all child processess to finish
-    waitpid(pid_tar, NULL, 0);
-    waitpid(pid_gzip, NULL, 0);
-    waitpid(pid_gpg, NULL, 0);
+    int status;
+    waitpid(pid_tar, &status, 0);
+    if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
+        printf("Collection successful.\n");
+    }
+    else {
+        printf("Collection failed.\n");
+    }
+    waitpid(pid_gzip, &status, 0);
+    if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
+        printf("Compression successful.\n");
+    }
+    else {
+        printf("Compression failed.\n");
+    }
+    waitpid(pid_gpg, &status, 0);
+    if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
+        printf("Encryption successful.\n");
+    }
+    else {
+        printf("Encryption failed.\n");
+    }
     
     close(output_file);
 
-    printf("Operation completed successfully.\n");
+    printf("Collection, compression and encryption successful.\n");
     return 0;
 }
